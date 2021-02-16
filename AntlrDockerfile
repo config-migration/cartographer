@@ -1,0 +1,18 @@
+# Dockerfile for building the antlr parser.
+#
+# Build: docker build -f AntlrDockerfile -t cartographer-antlr:latest .
+# Usage: docker run --rm -v "$(pwd):/cartographer" cartographer-antlr
+
+FROM openjdk:8-jdk
+
+VOLUME /cartographer
+WORKDIR /cartographer
+
+ENTRYPOINT ["make"]
+
+RUN apt-get update
+RUN apt-get install -y make
+
+RUN curl https://www.antlr.org/download/antlr-4.8-complete.jar -o /usr/local/lib/antlr-4.8-complete.jar
+RUN echo '#!/usr/bin/env sh\n\njava -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.Tool $@' > /usr/local/bin/antlr && \
+    chmod +x /usr/local/bin/antlr

@@ -1,0 +1,14 @@
+# OS Files
+.DS_Store
+
+# IDE Files
+.idea/
+*.iml
+/StraceLexer.tokens
+
+# Python Files
+__pycache__/
+*.pyc
+
+# Cache directory for computed values
+computed/
